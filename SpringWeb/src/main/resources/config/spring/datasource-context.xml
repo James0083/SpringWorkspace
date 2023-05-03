@@ -12,6 +12,7 @@
 	<context:property-placeholder location="classpath:/config/props/database.properties"/>
 	
 	<!-- [3] DataSource빈 등록 (DBCP 또는 Hikari CP 커넥션 풀) -->
+	<alias name="dataSource-${Global.DbType}" alias="dataSource"/>
 	
 	<!--DBCP 커넥션풀빈 등록 -->
 	<bean id="dataSource-oracle" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -36,7 +37,7 @@
 	<!-- MyBatis -->
 	<!-- [4] SqlSessionFactoryBean 등록 -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource-oracle"/>
+		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:/config/mybatis/mybatis-config.xml"/>
 	</bean>
 	
