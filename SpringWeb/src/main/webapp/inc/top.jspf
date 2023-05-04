@@ -26,9 +26,9 @@
 </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="jumbotron text-center" style="margin-bottom: 0">
-            <h1>Multishop</h1>
+            <h1>MultiShop</h1>
             <p>Best Shopping Mall</p>
         </div>
         <!-- navbar----------------------------- -->
@@ -67,4 +67,4 @@
         <!-- ----------------------------------- -->
     </div>
 
-    <div class="container mt-3" style="height: 80vh; overflow: scroll;">
+    <div class="container mt-3" style="height: 80vh; overflow: auto;">
