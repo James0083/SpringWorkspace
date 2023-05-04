@@ -1,6 +1,7 @@
 package com.my.myapp;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class UserController {
 	@Inject //@Autowired와 유사. my type으로 해당 객체를 주입한다
 	private UserService userService;
 
+	
 	@RequestMapping(value = "/join",method = RequestMethod.GET)
 	public String joinForm() {
 		
@@ -40,6 +42,7 @@ public class UserController {
 			
 			return "redirect:join";
 		}
+		
 		int n=userService.createUser(user);
 		String str=(n>0)?"회원가입 완료-로그인 하세요":"가입 실패";
 		String loc=(n>0)?"login":"javascript:history.back()";
@@ -67,5 +70,11 @@ public class UserController {
 		return "member/idCheckResult";
 	}
 	
+	@GetMapping("/user/myPage")
+	public String showMyPage(HttpSession session) {
+		
+		return "member/myPage";
+		
+	}
 	
 }
