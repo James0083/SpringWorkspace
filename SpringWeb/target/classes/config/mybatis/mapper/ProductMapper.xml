@@ -12,4 +12,15 @@
 		#{pimage1:VARCHAR},#{pimage2:VARCHAR},#{pimage3:VARCHAR},#{upCg_code},#{downCg_code})
 	</insert>
 
+	<select id="getProducts" resultType="Product">
+		select p.*,
+		(select upCg_name from upCategory where upCg_code=p.upCg_code) upCg_name,
+		(select downCg_name from downCategory where downCg_code=p.downCg_code)
+		downCg_name
+		from product p order by pnum desc
+	</select>
+	
+	<select id="selectByPspec" resultType="Product" parameterType="string">
+		select * from product where pspec=#{value}
+	</select>
 </mapper>
