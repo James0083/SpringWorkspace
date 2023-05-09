@@ -11,10 +11,10 @@ import com.shop.model.CategoryVO;
 import com.shop.model.ProductVO;
 
 @Service("adminService")
-public class AdminServideImpl implements AdminService {
+public class AdminServiceImpl implements AdminService {
 
 	@Inject
-	private ProductMapper productMapper;
+	private ProductMapper prodMapper;
 	
 	@Override
 	public List<CategoryVO> getUpcategory() {
@@ -43,13 +43,12 @@ public class AdminServideImpl implements AdminService {
 	@Override
 	public int productInsert(ProductVO prod) {
 		
-		return this.productMapper.productInsert(prod);
+		return this.prodMapper.productInsert(prod);
 	}
 
 	@Override
 	public List<ProductVO> productList() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.prodMapper.getProducts();
 	}
 
 }
