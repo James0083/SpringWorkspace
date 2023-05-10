@@ -29,8 +29,9 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public ProductVO selectByPnum(int pnum) {
+		
+		return this.productMapper.selectByPnum(pnum);
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

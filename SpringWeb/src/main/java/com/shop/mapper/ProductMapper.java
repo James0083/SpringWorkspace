@@ -11,6 +11,6 @@ public interface ProductMapper {
 	//상품진열 관련[고객]
 	List<ProductVO> selectByPspec(String pspec);
 	List<ProductVO> selectByCategory(int cg_code);
-	ProductVO selectByPnum(String pnum);
+	ProductVO selectByPnum(int pnum);
 
 }
