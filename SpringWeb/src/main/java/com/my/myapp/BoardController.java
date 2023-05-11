@@ -1,8 +1,11 @@
 package com.my.myapp;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.board.model.BoardVO;
 import com.board.service.BoardService;
@@ -37,10 +42,28 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String boardInsert(Model m, @ModelAttribute BoardVO board) {
+	public String boardInsert(Model m, @ModelAttribute BoardVO board, @RequestParam("mfilename") MultipartFile mf, HttpServletRequest req) {
 		log.info("board=="+board);
 		//1. 파일 업로드 처리
+		//[1] 업로드 디렉토리 절대경로 얻기 (resources/board_upload)
+		ServletContext app=req.getServletContext();
+		String upDir=app.getRealPath("/resources/board_upload");
 		
+		//[2] 업로드한 파일명과 파일크기 알아내기 ==> board에 setFilename(파일명), setFilesize(파일크기)
+		if(!mf.isEmpty()) {
+			String originFilename=mf.getOriginalFilename();
+			long fsize=mf.getSize();
+			
+			board.setFilename(originFilename);
+			board.setFilesize(fsize);
+		
+		//[3] 업로드 처리
+			try {
+				mf.transferTo(new File(upDir, originFilename));
+			}catch (Exception e) {
+				log.error("파일 업로드 실패: "+e);
+			}
+		}
 		
 		//2. 유효성 체크 (제목, 작성자, 비번) => write로 rediect이동
 		if(board.getSubject()==null || board.getUserid()==null || board.getPasswd()==null 
