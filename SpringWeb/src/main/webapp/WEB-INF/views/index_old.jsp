@@ -3,7 +3,11 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- HIT상품 보여주기 -->
-<%@ include file="/inc/mallHit.jspf" %>
+<c:import url="/prodPspec">
+	<c:param name="pspec" value="HIT"/>
+</c:import>
 
 <!-- NEW상품 보여주기 -->
-<%@ include file="/inc/mallNew.jspf" %>
+<c:import url="/prodPspec">
+	<c:param name="pspec" value="NEW"/>
+</c:import>
