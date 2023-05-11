@@ -67,11 +67,23 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="${myctx}/logout">Logout</a>
+          	</c:if>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="${myctx}/fileForm">Upload</a>
               </li>
-          	</c:if>
+              
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="${myctx}/board/write">Board Form</a>
+              </li>
+              
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="${myctx}/board/list">Board List</a>
+              </li>
+              
+              
               <!-- Dropdown -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
