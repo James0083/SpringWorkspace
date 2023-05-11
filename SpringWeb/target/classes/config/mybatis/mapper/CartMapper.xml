@@ -45,4 +45,9 @@
     <delete id="delCart" parameterType="_int">
     	delete from cart where cartNum=#{value}
     </delete>
+    
+    <!-- 장바구니 수량 수정 -->
+    <update id="editCart" parameterType="Cart">
+    	update cart set pqty=#{pqty} where cartNum=#{cartNum}
+    </update>
 </mapper>

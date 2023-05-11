@@ -56,7 +56,7 @@
 								</td>
 								<td>
 								<input type="number" name="pqty" id="pqty${state.index}" value="${item.pqty}" min="1" max="50">
-								<button class="btn btn-success">수정</button>
+								<button type="button" class="btn btn-success" onclick="cartEdit('${item.cartNum}', '${state.index}')">수정</button>
 								</td>
 								<td>
 								<fmt:formatNumber value="${item.saleprice}" pattern="###,###"/> 원<br>
@@ -98,6 +98,13 @@
 			<input type="hidden" name="cartNum">
 		</form>
 		<!-- 삭제form end----------------------- -->
+		
+		<!-- 수정form---------------------------- -->
+		<form name="ef" action="cartEdit">
+			<input type="hidden" name="cartNum">
+			<input type="hidden" name="pqty">
+		</form>
+		<!-- 수정form end------------------------- -->
 	</div>
 </div>
 
