@@ -16,6 +16,7 @@ public interface CartMapper {
 	CartVO getCartTotal(int idx_fk);
 	
 	int delCart(int cartNum);
+	int delCartAll(int idx_fk);
 	int editCart(CartVO cvo);
 	
 }

@@ -92,4 +92,15 @@ public class CartController {
 		return "redirect:cartList";
 	}
 	
+	@GetMapping("/delCartAll")
+	public String cartDeleteAll(HttpSession session) {
+		UserVO loginUser=(UserVO)session.getAttribute("loginUser");
+		int idx_fk=loginUser.getIdx();
+		CartVO cvo=new CartVO();
+		cvo.setIdx_fk(idx_fk);
+		int n=shopService.delCartAll(cvo);
+		
+		return "redirect:cartList";
+	}
+	
 }

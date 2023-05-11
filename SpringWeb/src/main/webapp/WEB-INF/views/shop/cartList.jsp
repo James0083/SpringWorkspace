@@ -86,6 +86,7 @@
 						<td colspan="3">
 							<button type="button" class="btn btn-outline-info" onclick="goOrder()">주문하기</button>
 							<button type="button" class="btn btn-outline-danger" onclick="location.href='../index'">계속쇼핑</button>
+							<button type="button" class="btn btn-outline-success" onclick="cartDelAll()">장바구니 비우기</button>
 						</td>
 					</tr>
 				</tbody>
@@ -109,12 +110,31 @@
 </div>
 
 <script>
+	function cartDelAll(){
+		let yn=confirm('장바구니를 모두 삭제할까요?');
+		if(yn){
+			location.href='delCartAll'
+		}
+	}//----------------------------
+	function cartEdit(cnum, i){
+		//alert(cnum+"/"+i);
+		let qty=$('#pqty'+i).val();
+		//alert(qty); //수정된 수량값
+		
+		ef.cartNum.value=cnum;
+		ef.pqty.value=qty;
+		ef.method='post';
+		ef.submit();
+	}//----------------------------
 	function cartDel(cnum){
 		//alert(cnum);
-		df.cartNum.value=cnum;
-		df.method='post';
-		df.submit();
-	}
+		let yn=confirm("정말 삭제할까요?");
+		if(yn){
+			df.cartNum.value=cnum;
+			df.method='post';
+			df.submit();
+		}
+	}//----------------------------
 </script>
 
 

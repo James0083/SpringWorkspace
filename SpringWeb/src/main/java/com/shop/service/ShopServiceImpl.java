@@ -89,8 +89,8 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public int delCartAll(CartVO cartVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return cartMapper.delCartAll(cartVo.getIdx_fk());
 	}
 
 	@Override
