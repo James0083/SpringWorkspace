@@ -121,16 +121,39 @@ public class BoardController {
 	}//-------------------------------
 	
 	@GetMapping("/list")
-	public String boardList(Model m) {
+	public String boardList(Model m, @RequestParam(defaultValue="1") int cpage) {
+		log.info("cpage: "+cpage);
+		if(cpage<0) {
+			cpage=1;//첫 페이지
+		}
 		//1. 총 게시글 수 가져오기
 		int totalCount=this.boardService.getTotalCount();
+		
+		int pageSize=5;
+		
+		int pageCount=(totalCount-1)/pageSize+1;
+		
+		if(cpage>pageCount) {
+			cpage=pageCount; //마지막 페이지
+		}
+		
+		int start=(cpage-1)*pageSize;
+		int end=cpage*pageSize+1;
+		Map<String,Integer> map=new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		
 		//2. 게시목록 가져오기
-		List<BoardVO> boardArr=this.boardService.selectBoardAll(null);
+		List<BoardVO> boardArr=this.boardService.selectBoardAll(map);
 		
 		m.addAttribute("totalCount", totalCount);
 		m.addAttribute("boardArr",boardArr);
+		m.addAttribute("pageCount", pageCount);
+		m.addAttribute("cpage", cpage);
 		
 		return "/board/boardList";
+	}//-----------------------------
+	
 	//Path접근방식으로 데이터를 넘길 경우
 	@GetMapping("/view/{num}")
 	public String boardView(Model m, @PathVariable("num") int num) {

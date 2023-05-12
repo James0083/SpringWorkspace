@@ -79,7 +79,17 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="3">페이지 네비</td>
+					<td colspan="3" class="text-center">
+						<ul class="pagination">
+							<c:forEach var="i" begin="1" end="${pageCount}">
+								<li class="page-item <c:if test="${i eq cpage}">active</c:if>">
+								<a class="page-link" href="list?cpage=<c:out value="${i}"/>">
+									<c:out value="${i}"/>	
+								</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</td>
 					<td colspan="2">
 						총 게시글수:<span class="text-primary">${totalCount} 개</span><br>
 						<span class="text-danger">cpage</span>/ 페이지수 pages
