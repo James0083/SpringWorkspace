@@ -116,6 +116,21 @@ public class BoardController {
 		m.addAttribute("boardArr",boardArr);
 		
 		return "/board/boardList";
+	//Path접근방식으로 데이터를 넘길 경우
+	@GetMapping("/view/{num}")
+	public String boardView(Model m, @PathVariable("num") int num) {
+		log.info("num: "+num);
+		//1. 조회수 증가
+		this.boardService.updateReadnum(num);
+		
+		//2. 글번호로 해당 글 가져오기
+		BoardVO vo=this.boardService.selectBoardByIdx(num);
+		
+		m.addAttribute("board", vo);
+		
+		return "board/boardView";
+	}//---------------------------------
+	
 	}
 	
 }

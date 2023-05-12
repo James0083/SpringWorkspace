@@ -47,14 +47,14 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO selectBoardByIdx(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.boardMapper.selectBoardByIdx(num);
 	}
 
 	@Override
 	public int updateReadnum(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return this.boardMapper.updateReadnum(num);
 	}
 
 	@Override
