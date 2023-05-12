@@ -102,6 +102,8 @@ public class BoardController {
 		int n=0;
 		String str="";
 		if("write".equals(board.getMode())) {
+			//비밀번호 암호화 처리하기
+			
 			n=boardService.insertBoard(board);
 			str="글쓰기 ";
 		}else if("edit".equals(board.getMode())) {
