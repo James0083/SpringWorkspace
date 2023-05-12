@@ -35,7 +35,18 @@
 						<c:out value="${board.num}"/>
 					</td>
 					<td>
-						<c:out value="${board.subject}"/>
+					
+					<!-- 글제목----------------------- -->
+					
+						<a href="view/<c:out value="${board.num}"/>"><c:out value="${board.subject}"/></a>
+						<!-- 청부파일 여부------------------- -->
+						<c:if test="${board.filesize >0}">
+						<span class="float-right">
+							<img src="../images/attach.jpg" style="width:20px"
+							 title="<c:out value="${board.originFilename}"/>">
+						</span>
+						</c:if>
+						<!-- ---------------------------- -->
 					</td>
 					<td>
 						<c:out value="${board.userid}"/>

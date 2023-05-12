@@ -2,16 +2,18 @@ package com.my.myapp;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,29 +44,38 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String boardInsert(Model m, @ModelAttribute BoardVO board, @RequestParam("mfilename") MultipartFile mf, HttpServletRequest req) {
+	public String boardInsert(Model m, @ModelAttribute BoardVO board, 
+			@RequestParam("mfilename") MultipartFile mf, HttpSession session) {
 		log.info("board=="+board);
 		//1. 파일 업로드 처리
 		//[1] 업로드 디렉토리 절대경로 얻기 (resources/board_upload)
-		ServletContext app=req.getServletContext();
+		ServletContext app=session.getServletContext();
 		String upDir=app.getRealPath("/resources/board_upload");
-		
+		File dir=new File(upDir);
+		if(!dir.exists()) {
+			dir.mkdirs();//업로드 디렉토리 생성
+		}
+		if(!mf.isEmpty()) {//첨부파일이 있다
 		//[2] 업로드한 파일명과 파일크기 알아내기 ==> board에 setFilename(파일명), setFilesize(파일크기)
-		if(!mf.isEmpty()) {
-			String originFilename=mf.getOriginalFilename();
-			long fsize=mf.getSize();
+			String fname=mf.getOriginalFilename();//원본파일명
+			long fsize=mf.getSize();//파일크기
+			//파일 컨텐트 타입
+			//String ftype=mf.getContentType();
 			
-			board.setFilename(originFilename);
+			UUID uid=UUID.randomUUID();
+			String filename=uid.toString()+"_"+fname;
+			log.info("fname: "+fname+", filename: "+filename+", filesizs: "+fsize);
+			
+			board.setOriginFilename(fname);//원본파일명
+			board.setFilename(filename);//물리적파일명
 			board.setFilesize(fsize);
-		
 		//[3] 업로드 처리
 			try {
-				mf.transferTo(new File(upDir, originFilename));
+				mf.transferTo(new File(upDir, filename));
+				log.info("upDir: "+upDir);
 			}catch (Exception e) {
-				log.error("파일 업로드 실패: "+e);
+				log.error("파일 업로드 에러: "+e);
 			}
-		}
-		
 		//2. 유효성 체크 (제목, 작성자, 비번) => write로 rediect이동
 		if(board.getSubject()==null || board.getUserid()==null || board.getPasswd()==null 
 				|| board.getSubject().trim().isEmpty() || board.getUserid().trim().isEmpty() 
