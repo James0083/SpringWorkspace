@@ -131,6 +131,39 @@ public class BoardController {
 		return "board/boardView";
 	}//---------------------------------
 	
+	@PostMapping("/delete")
+	public String boardDelete(Model m, @RequestParam(defaultValue="0") int num,
+			@RequestParam(defaultValue = "") String passwd, HttpSession session) {
+		log.info("num: "+num+", passwd: "+passwd);
+		if(num==0||passwd.isEmpty()) {
+			return "redirect:list";
+		}
+		//해당 글을 DB에서 가져오기
+		BoardVO vo=this.boardService.selectBoardByIdx(num);
+		//비밀번호 체크
+		String dbPasswd=vo.getPasswd();
+		if(!dbPasswd.equals(passwd)) {
+			return util.addMsgBack(m, "비밀번호가 일치하지 않아요");
+		}
+		//db에서 글 삭제 처리
+		int n=boardService.deleteBoard(num);
+		
+		String upDir=session.getServletContext().getRealPath("/resources/board_upload");
+		
+		//서버에 첨부한 파일이 있다면 서버에서 삭제 처리
+		if(n>0 && vo.getFilename()!=null) {
+			File f=new File(upDir, vo.getFilename());
+			if(f.exists()) {
+				boolean b=f.delete();
+				log.info("파일 삭제 여부: "+b);
+			}
+		}
+		
+		String str=(n>0)?"삭제 성공":"삭제 실패";
+		String loc=(n>0)?"list":"javascript:history.back()";
+		return util.addMsgLoc(m, str, loc);
+	}//--------------------------------------
+	
 	}
 	
 }

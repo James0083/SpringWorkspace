@@ -31,4 +31,9 @@
     	select * from spring_board where num=#{value}
     </select>
     
+    <!-- 글 삭제 -->
+    <delete id="deleteBoard" parameterType="_int">
+    	delete from spring_board where num=#{value}
+    </delete>
+    
 </mapper>
