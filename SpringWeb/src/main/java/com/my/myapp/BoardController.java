@@ -1,7 +1,9 @@
 package com.my.myapp;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -110,13 +112,13 @@ public class BoardController {
 		}else if("rewrite".equals(board.getMode())) {
 			//답변 글쓰기
 			str="답변 글쓰기 ";
-			
+			n=boardService.rewriteBoard(board);
 		}
 		str+=(n>0)?"성공":"실패";
 		String loc=(n>0)?"list":"javascript:history.back()";
 		//4. 그 결과 메시지, 이동경로 처리
 		return util.addMsgLoc(m, str, loc);
-	}
+	}//-------------------------------
 	
 	@GetMapping("/list")
 	public String boardList(Model m) {
@@ -197,6 +199,13 @@ public class BoardController {
 		return "board/boardEdit";
 	}//--------------------------------------
 	
+	@PostMapping("/rewrite")
+	public String boardRewriteForm(Model m, @ModelAttribute BoardVO vo) {
+		log.info("vo: "+vo);
+		m.addAttribute("num", vo.getNum());//부모글의 글번호
+		m.addAttribute("subject", vo.getSubject());//제목
+		log.info("num: "+vo.getNum()+", subject: "+vo.getSubject());
+		return "board/boardRewrite";
 	}
 	
 }

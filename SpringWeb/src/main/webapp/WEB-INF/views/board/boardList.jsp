@@ -36,8 +36,23 @@
 					</td>
 					<td>
 					
+					<!-- 답변 레벨에 따라 들어쓰기 -->
+					<c:forEach var="k" begin="1" end="${board.lev}">
+						&nbsp;&nbsp;&nbsp;
+					</c:forEach>
+					<c:if test="${board.lev>0}">
+						<img src="../images/re.png">
+					</c:if>
+					
 					<!-- 글제목----------------------- -->
 					
+					<!-- proDetail?pnum=1 ==> @RequestParam("pnum")
+						 proDetail/1
+						 
+						 board/list
+						 board/write 
+						 board/view/글번호
+					 -->
 						<a href="view/<c:out value="${board.num}"/>"><c:out value="${board.subject}"/></a>
 						<!-- 청부파일 여부------------------- -->
 						<c:if test="${board.filesize >0}">
