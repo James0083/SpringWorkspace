@@ -36,4 +36,16 @@
     	delete from spring_board where num=#{value}
     </delete>
     
+    <!-- 글 수정 -->
+    <update id="updateBoard" parameterType="Board">
+    	update spring_board set userid=#{userid}, subject=#{subject},
+    	content=#{content:VARCHAR}, passwd=#{passwd}
+    	<if test="filename != null and filename !=''">
+    	, filename=#{filename}, filesize=#{filesize}, originFilename=#{originFilename}
+    	</if>
+    	<where>
+    		num=#{num}
+    	</where> 
+    </update>
+    
 </mapper>

@@ -65,8 +65,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int updateBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return this.boardMapper.updateBoard(board);
 	}
 
 	@Override

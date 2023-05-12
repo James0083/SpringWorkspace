@@ -76,6 +76,18 @@ public class BoardController {
 			}catch (Exception e) {
 				log.error("파일 업로드 에러: "+e);
 			}
+
+			//mode가 edit이고 예전에 첨부했던 파일이 있다면 => 예전에 첨부파일 삭제처리
+			if(board.getMode().equals("edit") && board.getOld_filename()!=null) {
+				File df=new File(upDir, board.getOld_filename());
+				if(df.exists()) {
+					boolean b=df.delete();
+					log.info("old file delete: "+b);
+				}
+				
+			}//if-------------------
+			
+		}//if---------------------
 		//2. 유효성 체크 (제목, 작성자, 비번) => write로 rediect이동
 		if(board.getSubject()==null || board.getUserid()==null || board.getPasswd()==null 
 				|| board.getSubject().trim().isEmpty() || board.getUserid().trim().isEmpty() 
@@ -93,6 +105,7 @@ public class BoardController {
 		}else if("edit".equals(board.getMode())) {
 			//수정처리
 			str="글수정 ";
+			n=boardService.updateBoard(board);
 			
 		}else if("rewrite".equals(board.getMode())) {
 			//답변 글쓰기
@@ -162,6 +175,26 @@ public class BoardController {
 		String str=(n>0)?"삭제 성공":"삭제 실패";
 		String loc=(n>0)?"list":"javascript:history.back()";
 		return util.addMsgLoc(m, str, loc);
+	}//--------------------------------------
+	
+	//수정 폼 보여주기
+	@PostMapping("/edit")
+	public String boardEditForm(Model m, @ModelAttribute BoardVO vo) {
+		log.info("vo: "+vo);
+		if(vo.getNum()==0||vo.getPasswd()==null) {
+			return "redirect:list";
+		}
+		BoardVO dbvo=this.boardService.selectBoardByIdx(vo.getNum());
+		if(dbvo==null) {
+			return util.addMsgBack(m, "해당 글은 없어요");
+		}
+		//비번 체크
+		if(!dbvo.getPasswd().equals(vo.getPasswd())) {
+			return util.addMsgBack(m, "비밀번호가 일치하지 않아요");
+		}
+		m.addAttribute("board", dbvo);
+		
+		return "board/boardEdit";
 	}//--------------------------------------
 	
 	}
