@@ -32,16 +32,12 @@ public class Q4_ArrayMaxMin {
 		answer[0]=heights[0];
 		answer[1]=heights[0];
 		int t=0;
-		for(int i=1;i<heights.length;i++) {
-			if(answer[0]<heights[i]) {
-				t=answer[0];
-				answer[0]=heights[i];
-				heights[i]=t;
+		for(int h:heights) {
+			if(answer[0]<h) {
+				answer[0]=h;
 			}
-			if(answer[1]>heights[i]) {
-				t=answer[1];
-				answer[1]=heights[i];
-				heights[i]=t;
+			if(answer[1]>h) {
+				answer[1]=h;
 			}
 		}
 		
