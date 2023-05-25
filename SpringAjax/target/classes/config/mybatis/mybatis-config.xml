@@ -4,14 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   
-  <!-- typeAlias 타입 별칭 설정 ========================== -->
-  <typeAliases>
-
-  </typeAliases>
-  
-  
-  <!-- mapper 정의 ====================================== -->
-  <mappers>
-
-  </mappers>
+	<!-- typeAlias 타입 별칭 설정 ========================== -->
+	<typeAliases>
+		<typeAlias type="com.multi.domain.BookVO" alias="Book"/>
+	</typeAliases>
+	
+	
+	<!-- mapper 정의 ====================================== -->
+	<mappers>
+		<mapper resource="config/mybatis/mapper/BookMapper.xml"/>
+	</mappers>
 </configuration>
