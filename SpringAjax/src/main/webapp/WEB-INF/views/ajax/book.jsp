@@ -25,21 +25,110 @@
 		//모든 도서 목록 가져오기
 		getAllBook();
 	});
-	//GET /books : 모든 도서정보 가져오기
-	//GET /books/isbn번호 : 특정 도서정보 가져오기
-	const getAllBook=function(){
+	//GET  /books : 모든 도서정보 가져오기
+	//GET  /books/isbn번호 : 특정 도서정보 가져오기
+	//POST /books : 도서정보 등록
+	//PUT  /books/isbn번호 : 특정 도서정보 수정하기
+	//DELETE /books/isbn번호 : 특정 도서정보 삭제하기
+	
+	//도서정보 수정처리
+	const goEditEnd=function(){
+		let bn=$('#isbn').val();
+		let btitle=$("#title").val();
+		let pub=$('#published').val();
+		let price=$('#price').val();
+		//let pdate=$('#published').val();
+		let jsonData={
+				isbn:bn,
+				title:btitle,
+				publish:pub,
+				price:price
+		};
+		//alert(JSON.stringify(jsonData));
 		$.ajax({
-			type:'get',
-			url:'/books'
+			type:'put',
+			url:'books/'+bn,
+			data:JSON.stringify(jsonData),
+			contentType:'application/json; charset=UTF-8',
 			dataType:'json',
+			cache:false,
 			success:function(res){
-				alert(JSON.stringify(res))
+				alert(res); //{result:'OK'}
 			},
 			error:function(err){
 				alert(err.status);
 			}
 		})
-	}
+		
+	}//--------------
+	
+	const goEdit=function(visbn){
+		//alert(visbn);
+		$.ajax({
+			type:'get',
+			url:'books/'+visbn,
+			dataType:'json',
+			success:function(res){
+				//alert(JSON.stringify(res));
+				$('#isbn').val(res.isbn);
+				$('#title').val(res.title);
+				$('#publish').val(res.publish);
+				$('#price').val(res.price);
+				$('#published').val(res.published);
+				let str='<img src="resources/Upload/'+res.bimage+'" calss="img img-thumbnail">'
+				$('#bimage').html(str);
+			},
+			error:function(err){
+				alert(err.status);
+			}
+		})
+	}//---------------------------
+	
+	
+	const getAllBook=function(){
+		$.ajax({
+			type:'get',
+			url:'/books',
+			dataType:'json',
+			success:function(res){
+				//alert(JSON.stringify(res))
+				showBooks(res);
+			},
+			error:function(err){
+				alert(err.status);
+			}
+		})
+	}//-------------------
+	const showBooks=function(res){
+		let str='<table class="table table-bordered">';
+		$.each(res, (i, book)=>{
+			str+='<tr>';
+			str+='<td width="20%">';
+			str+=book.title;
+			str+='</td>';
+			
+			str+='<td width="20%">';
+			str+=book.publish;
+			str+='</td>';
+			
+			str+='<td width="20%">';
+			str+=book.price;
+			str+='</td>';
+			
+			str+='<td width="20%">';
+			str+=book.published;
+			str+='</td>';
+			
+			str+='<td width="20%" style="text-align:center">';
+			str+='<a href="#book_data" onclick="goEdit(\''+book.isbn+'\')">수정</a> | ';
+			str+='<a href="#book_data" onclick="goDel(\''+book.isbn+'\')">삭제</a>';
+			str+='</td>';
+			
+			str+='</tr>';
+			})
+			str+='</table>';
+		$('#book_data').html(str);
+	}//------------------------
 
 </script>
 </head>
@@ -83,7 +172,7 @@
 </div>
 <div id="localBook">
 
-<table class="table table-bordered" border="1">
+<table class="table table-bordered" border="1" style='margin-bottom:0'>
 	<tr class="info">
 		<td style="width:20%;">서명</td>
 		<td style="width:20%;">출판사</td>
