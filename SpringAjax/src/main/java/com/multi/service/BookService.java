@@ -12,4 +12,7 @@ public interface BookService {
 	int updateBook(BookVO book);
 	int deleteBook(String isbn);
 	
+	List<BookVO> getPublishList();
+	List<BookVO> getTitleList(String publish);
+	List<BookVO> getFindBook(String title);
 }
