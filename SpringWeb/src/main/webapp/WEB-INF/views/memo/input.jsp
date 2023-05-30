@@ -35,7 +35,8 @@
 <body>
 <div id="wrap">
 <!-- 
-	/memo	=> 
+	/memo	=> get방식이면 메모 등록 폼을 보여주고
+	/meme	=> post방식이면 메모글을 등록하는 로직을 수행
  -->
 	<form name="mf" action="./memo" method="post">
 	<!-- table로 화면과 같이 구성하세요 -->
