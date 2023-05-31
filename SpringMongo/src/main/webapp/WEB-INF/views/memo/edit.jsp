@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>::메모 수정::</title>
 <!-- memo.css참조--------------------------------------------- -->
-<link rel="stylesheet" type="text/css" href="css/memo.css">
+<link rel="stylesheet" type="text/css" href="../resources/memo.css">
 <!-- -------------------------------------------------------- -->
 
 <script type="text/javascript">
@@ -37,7 +37,10 @@
 <div id="wrap">
 <!-- http://localhost:9090/MyWeb/memo/MemoAdd?name=asdf+a&msg=asdfasd -->
 <!-- http://localhost:9090/MyWeb/MemoAdd?name=asdfa&msg=asdfasdf -->
-	<form name="mf" action="memoEdit" method="post">
+	<form name="mf" action="../edit" method="post">
+	<!-- --------------------------------------------------- -->
+	<input type="hidden" name="id" value="${memo.id}">
+	<!-- --------------------------------------------------- -->
 	<!-- table로 화면과 같이 구성하세요 -->
 		<table border="1">
 			<tr>
