@@ -86,8 +86,8 @@ public class Weka01NaiveBayes {
 		}
 	}//--------------------------
 	public static void main(String[] args) {
-		String path="/Applications/weka/weka-3-9-3/data/iris.arff";//훈련 및 검증에 사용
-		String path_test="/Applications/weka/weka-3-9-3/data/iris_test.arff";//훈련된 모델을 이용해 임의 테스트 데이터를 분류할떄 사용
+		String path="/Users/jaewonyou/Applications/weka/weka-3-9-3/data/iris.arff";//훈련 및 검증에 사용
+		String path_test="/Users/jaewonyou/Applications/weka/weka-3-9-3/data/iris_test.arff";//훈련된 모델을 이용해 임의 테스트 데이터를 분류할떄 사용
 		
 		Weka01NaiveBayes app=new Weka01NaiveBayes();
 		app.loadArff(path);
